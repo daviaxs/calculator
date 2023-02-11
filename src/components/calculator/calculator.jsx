@@ -56,7 +56,7 @@ export function Calculator() {
       setNum(parseFloat(oldNum) + parseFloat(num))
     }
 
-    setRest(oldNum + operator + num)
+    setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
   }
 
   function clearNum() {
