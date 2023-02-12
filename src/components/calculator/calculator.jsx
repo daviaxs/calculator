@@ -80,8 +80,13 @@ export function Calculator() {
       setNum(0);
       setRest('Erro');
     } else {
-      setNum(result)
-      setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
+      if (Number.isInteger(result)) {
+        setNum(result.toFixed(0))
+        setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
+      } else {
+        setNum(result.toFixed(3))
+        setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
+      }
     }
 
   }
