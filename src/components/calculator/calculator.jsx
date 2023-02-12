@@ -29,6 +29,7 @@ export function Calculator() {
 
   function porcentage() {
     setNum(num / 100)
+    setRest(`${oldNum} / 100 =`)
     if (oldNum === 0) {
       setNum(0)
     }
@@ -47,12 +48,12 @@ export function Calculator() {
     var operatorInput = e.target.value
     setOperator(operatorInput)
     setOldNum(num)
+    setRest(`${oldNum} ${operatorInput}`)
     setNum(0)
   }
 
   function calculate() {
     let result;
-    let numberToCompare
 
     if (isNaN(num) || !isFinite(num) || isNaN(oldNum) || !isFinite(oldNum)) {
       setRest("Erro");
