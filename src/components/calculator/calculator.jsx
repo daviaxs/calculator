@@ -1,7 +1,7 @@
 import './style.css'
 import './button-style.css'
 import Result from '../../assets/svgs/result.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 export function Calculator() {
@@ -12,7 +12,7 @@ export function Calculator() {
   const [rest, setRest] = useState()
 
   function inputNum(e) {
-    var number = e.target.value
+    let number = e.target.value
 
     const dotCount = (num + number).toString().split(".").length - 1;
     if (dotCount > 1) {
@@ -45,7 +45,7 @@ export function Calculator() {
   }
 
   function operatorHandler(e) {
-    var operatorInput = e.target.value
+    let operatorInput = e.target.value
     setOperator(operatorInput)
     setOldNum(num)
     setRest(`${num} ${operatorInput}`)
@@ -56,12 +56,12 @@ export function Calculator() {
     let result;
 
     if (isNaN(num) || !isFinite(num) || isNaN(oldNum) || !isFinite(oldNum)) {
-      setRest("Erro");
+      setRest(0);
       return;
     }
 
     if (operator === '/' && num === 0) {
-      setNum("Erro");
+      setNum(0);
       return;
     }
 
@@ -80,15 +80,9 @@ export function Calculator() {
       setNum(0);
       setRest('Erro');
     } else {
-      if (Number.isInteger(result)) {
-        setNum(result.toFixed(0))
-        setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
-      } else {
-        setNum(result.toFixed(3))
-        setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
-      }
+      setNum(result)
+      setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
     }
-
   }
 
   function clearNum() {
@@ -99,6 +93,28 @@ export function Calculator() {
     setNum(0)
     setRest()
   }
+
+  const numberResponsive = () => {
+    const numberContainer = document.querySelector('#numberContainer');
+    const resultIcon = document.querySelector('#result-icon');
+    const num = parseInt(numberContainer.textContent, 10);
+    const numDigits = num.toString().length;
+
+    if (numDigits <= 9) {
+      numberContainer.style.fontSize = '32px';
+      resultIcon.style.marginTop = '14px'
+    } else if (numDigits >= 10 && numDigits <= 14) {
+      numberContainer.style.fontSize = '24px';
+      resultIcon.style.marginTop = '5px'
+    } else if (numDigits > 14) {
+      resultIcon.style.marginTop = '-3px'
+      numberContainer.style.fontSize = '12px';
+    }
+  };
+
+  useEffect(() => {
+    numberResponsive()
+  }, [num])
 
   if (num == NaN) {
     setNum(0)
@@ -117,7 +133,7 @@ export function Calculator() {
         <img id='result-icon' src={Result} alt="Resultado" />
 
         <div id='counter'>
-          <p>
+          <p id='numberContainer'>
             {num}
           </p>
         </div>
