@@ -14,7 +14,12 @@ export function Calculator() {
   function inputNum(e) {
     var number = e.target.value
 
-    if (num === 0 ) {
+    const dotCount = (num + number).toString().split(".").length - 1;
+    if (dotCount > 1) {
+      return;
+    }
+
+    if (num === 0) {
       setNum(number)
     } else {
       setNum(num + number)
@@ -23,7 +28,7 @@ export function Calculator() {
   }
 
   function porcentage() {
-    setNum(num/100)
+    setNum(num / 100)
     if (oldNum === 0) {
       setNum(0)
     }
@@ -46,17 +51,38 @@ export function Calculator() {
   }
 
   function calculate() {
-    if(operator === '/') {
-      setNum(parseFloat(oldNum)/ parseFloat(num))
-    } else if (operator === 'X') {
-      setNum(parseFloat(oldNum) * parseFloat(num))
-    } else if (operator === '-') {
-      setNum(parseFloat(oldNum) - parseFloat(num))
-    } else if (operator === '+') {
-      setNum(parseFloat(oldNum) + parseFloat(num))
+    let result;
+    let numberToCompare
+
+    if (isNaN(num) || !isFinite(num) || isNaN(oldNum) || !isFinite(oldNum)) {
+      setRest("Erro");
+      return;
     }
 
-    setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
+    if (operator === '/' && num === 0) {
+      setNum("Erro");
+      return;
+    }
+
+
+    if (operator === '/') {
+      result = parseFloat(oldNum) / parseFloat(num)
+    } else if (operator === 'X') {
+      result = parseFloat(oldNum) * parseFloat(num)
+    } else if (operator === '-') {
+      result = parseFloat(oldNum) - parseFloat(num)
+    } else if (operator === '+') {
+      result = parseFloat(oldNum) + parseFloat(num)
+    }
+
+    if (isNaN(result)) {
+      setNum(0);
+      setRest('Erro');
+    } else {
+      setNum(result)
+      setRest(`${oldNum + ' ' + operator + ' ' + num} =`)
+    }
+
   }
 
   function clearNum() {
