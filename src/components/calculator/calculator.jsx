@@ -29,7 +29,7 @@ export function Calculator() {
 
   function porcentage() {
     setNum(num / 100)
-    setRest(`${oldNum} / 100 =`)
+    setRest(`${num} / 100 =`)
     if (oldNum === 0) {
       setNum(0)
     }
