@@ -48,11 +48,7 @@ export function Calculator() {
     var operatorInput = e.target.value
     setOperator(operatorInput)
     setOldNum(num)
-    if (oldNum === undefined || oldNum === 0 || oldNum === isNaN) {
-      setRest(`${num} ${operatorInput}`)
-    } else {
-      setRest(`${num} ${operatorInput}`)
-    }
+    setRest(`${num} ${operatorInput}`)
     setNum(0)
   }
 
