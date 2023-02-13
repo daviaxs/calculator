@@ -95,26 +95,45 @@ export function Calculator() {
   }
 
   const numberResponsive = () => {
-    const numberContainer = document.querySelector('#numberContainer');
-    const resultIcon = document.querySelector('#result-icon');
-    const num = parseInt(numberContainer.textContent, 10);
-    const numDigits = num.toString().length;
+    const numDigits = num.toString().length
 
     if (numDigits <= 9) {
-      numberContainer.style.fontSize = '32px';
-      resultIcon.style.marginTop = '14px'
+      return {fontSize: '32px'}
     } else if (numDigits >= 10 && numDigits <= 14) {
-      numberContainer.style.fontSize = '24px';
-      resultIcon.style.marginTop = '5px'
+      return { fontSize: '24px' }
     } else if (numDigits > 14) {
-      resultIcon.style.marginTop = '-3px'
-      numberContainer.style.fontSize = '12px';
+      return { fontSize: '12px' }
     }
-  };
 
-  useEffect(() => {
-    numberResponsive()
-  }, [num])
+  }
+
+  const restResponsive = () => {
+    const numDigits = num.toString().length
+
+
+    if (numDigits <= 9) {
+      return {fontSize: '20px'}
+    } else if (numDigits >= 10 && numDigits <= 14) {
+      return { fontSize: '15px' }
+    } else if (numDigits > 14) {
+      return { fontSize: '10px' }
+    }
+  }
+
+  const iconResponsive = () => {
+    const numDigits = num.toString().length
+
+
+    if (numDigits <= 9) {
+      return {marginTop: '14px'}
+    } else if (numDigits >= 10 && numDigits <= 14) {
+      return { marginTop: '5px' }
+    } else if (numDigits > 14) {
+      return { marginTop: '-3px' }
+    }
+  }
+
+
 
   if (num == NaN) {
     setNum(0)
@@ -126,14 +145,14 @@ export function Calculator() {
 
       <div id='result'>
 
-        <div id="rest" className='result'>
+        <div id="rest" className='result' style={restResponsive()}>
           {rest}
         </div>
 
-        <img id='result-icon' src={Result} alt="Resultado" />
+        <img id='result-icon' src={Result} alt="Resultado" style={iconResponsive()}/>
 
         <div id='counter'>
-          <p id='numberContainer'>
+          <p id='numberContainer' style={numberResponsive()}>
             {num}
           </p>
         </div>
